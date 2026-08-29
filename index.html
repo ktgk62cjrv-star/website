@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THE CHAMBER — Buckshot Roulette Field Manual</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b0a08;
+    --bg-panel:#141210;
+    --bg-panel-2:#1a1713;
+    --line:#2c2620;
+    --line-bright:#3d362c;
+    --paper:#e7dfc9;
+    --paper-dim:#a99f86;
+    --muted:#7a7263;
+    --live:#a4241a;
+    --live-bright:#d13b2c;
+    --blank:#c9b97c;
+    --amber:#e0952f;
+    --amber-dim:#8a5c22;
+    --focus:#e0952f;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
+  }
+  body{
+    margin:0;
+    background:
+      radial-gradient(ellipse 900px 500px at 50% -10%, rgba(224,149,47,0.09), transparent 60%),
+      var(--bg);
+    color:var(--paper);
+    font-family:'IBM Plex Sans', sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--amber); color:#1a1000;}
+  a{color:var(--amber);}
+  h1,h2,h3{font-family:'Bebas Neue', sans-serif; letter-spacing:0.03em; font-weight:400; margin:0;}
+  .mono{font-family:'IBM Plex Mono', monospace;}
+  .wrap{max-width:1080px; margin:0 auto; padding:0 24px;}
+  :focus-visible{outline:2px solid var(--focus); outline-offset:3px;}
+
+  header.topnav{position:sticky; top:0; z-index:50; background:rgba(11,10,8,0.92); backdrop-filter:blur(6px); border-bottom:1px solid var(--line);}
+  .nav-inner{max-width:1080px; margin:0 auto; padding:0 24px; display:flex; align-items:center; justify-content:space-between; height:56px;}
+  .brand{font-family:'Bebas Neue'; font-size:20px; letter-spacing:0.08em; color:var(--paper); text-decoration:none; display:flex; align-items:center; gap:8px;}
+  .brand .dot{width:8px; height:8px; border-radius:50%; background:var(--live-bright); box-shadow:0 0 8px var(--live-bright);}
+  nav.tabs{display:flex; gap:2px;}
+  nav.tabs a{font-family:'IBM Plex Mono'; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--paper-dim); text-decoration:none; padding:8px 12px; border-bottom:2px solid transparent; transition:color .15s, border-color .15s;}
+  nav.tabs a:hover{color:var(--amber); border-color:var(--amber-dim);}
+  @media(max-width:820px){nav.tabs{display:none;}}
+
+  .hero{padding:96px 0 64px; position:relative; border-bottom:1px solid var(--line); overflow:hidden;}
+  .bulb{position:absolute; top:-140px; left:50%; transform:translateX(-50%); width:900px; height:400px; background:radial-gradient(ellipse at center, rgba(224,149,47,0.16), transparent 65%); animation:flicker 6s infinite ease-in-out; pointer-events:none;}
+  @keyframes flicker{0%,100%{opacity:1;} 42%{opacity:1;} 43%{opacity:.55;} 44%{opacity:1;} 71%{opacity:1;} 72%{opacity:.7;} 73%{opacity:1;}}
+  .eyebrow{font-family:'IBM Plex Mono'; font-size:12px; letter-spacing:0.22em; text-transform:uppercase; color:var(--amber); margin-bottom:18px; display:flex; align-items:center; gap:10px;}
+  .eyebrow::before{content:""; width:26px; height:1px; background:var(--amber-dim);}
+  h1.title{font-size:clamp(48px,9vw,104px); line-height:0.92; color:var(--paper);}
+  h1.title span{color:var(--live-bright);}
+  .lede{max-width:560px; margin-top:22px; color:var(--paper-dim); font-size:17px;}
+  .hero-grid{display:grid; grid-template-columns:1.1fr 0.9fr; gap:56px; align-items:center;}
+  @media(max-width:860px){.hero-grid{grid-template-columns:1fr;}}
+  .shell-stage{display:flex; flex-direction:column; align-items:center; gap:14px;}
+  .shell-btn{background:none; border:none; cursor:pointer; padding:0;}
+  .shell-caption{font-family:'IBM Plex Mono'; font-size:12px; color:var(--muted); text-align:center;}
+  .shell-caption b{color:var(--paper);}
+  .shell-caption .verdict{display:block; margin-top:4px; font-size:13px; letter-spacing:0.05em;}
+  .verdict.live{color:var(--live-bright);}
+  .verdict.blank{color:var(--blank);}
+  .cta-row{display:flex; gap:14px; margin-top:32px; flex-wrap:wrap;}
+  .btn{font-family:'IBM Plex Mono'; font-size:12px; letter-spacing:0.06em; text-transform:uppercase; padding:12px 20px; border:1px solid var(--line-bright); color:var(--paper); text-decoration:none; background:var(--bg-panel); transition:border-color .15s, color .15s, background .15s; display:inline-block;}
+  .btn:hover{border-color:var(--amber); color:var(--amber);}
+  .btn.primary{background:var(--amber); color:#1a1000; border-color:var(--amber); font-weight:600;}
+  .btn.primary:hover{background:#f0a53d;}
+
+  section{padding:76px 0; border-bottom:1px solid var(--line);}
+  .sec-head{display:flex; align-items:baseline; justify-content:space-between; margin-bottom:40px; flex-wrap:wrap; gap:10px;}
+  .sec-num{font-family:'IBM Plex Mono'; font-size:12px; color:var(--amber-dim);}
+  h2.sec-title{font-size:clamp(32px,5vw,52px); color:var(--paper);}
+  .sec-sub{max-width:620px; color:var(--paper-dim); margin-top:12px;}
+
+  .rules-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line);}
+  .rule-card{background:var(--bg-panel); padding:26px 24px;}
+  .rule-card .rk{font-family:'IBM Plex Mono'; font-size:11px; color:var(--amber); letter-spacing:0.1em;}
+  .rule-card h3{font-size:24px; margin:8px 0 10px; color:var(--paper);}
+  .rule-card p{color:var(--paper-dim); font-size:14.5px; margin:0;}
+  @media(max-width:760px){.rules-grid{grid-template-columns:1fr;}}
+
+  .item-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:14px;}
+  @media(max-width:900px){.item-grid{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:560px){.item-grid{grid-template-columns:1fr;}}
+  .item-card{background:var(--bg-panel); border:1px solid var(--line); padding:22px; transition:border-color .15s;}
+  .item-card:hover{border-color:var(--amber-dim);}
+  .item-top{display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;}
+  .item-name{font-size:21px; font-family:'Bebas Neue'; letter-spacing:0.02em; color:var(--paper);}
+  .item-icon{width:34px; height:34px; flex-shrink:0;}
+  .item-row{margin-top:12px;}
+  .item-label{font-family:'IBM Plex Mono'; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:var(--amber);}
+  .item-text{font-size:13.5px; color:var(--paper-dim); margin-top:4px;}
+  .item-text.mistake{color:#c98a7f;}
+
+  .odds-panel{background:linear-gradient(180deg, var(--bg-panel-2), var(--bg-panel)); border:1px solid var(--line-bright); padding:36px;}
+  .odds-grid{display:grid; grid-template-columns:1fr 1fr; gap:40px;}
+  @media(max-width:800px){.odds-grid{grid-template-columns:1fr;}}
+  .stepper-group{margin-bottom:26px;}
+  .stepper-label{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px;}
+  .stepper-label .lbl{font-family:'IBM Plex Mono'; font-size:12px; letter-spacing:0.08em; text-transform:uppercase;}
+  .stepper-label .lbl.live{color:var(--live-bright);}
+  .stepper-label .lbl.blank{color:var(--blank);}
+  .stepper{display:flex; align-items:center; gap:14px;}
+  .stepper button{width:38px; height:38px; background:var(--bg); border:1px solid var(--line-bright); color:var(--paper); font-family:'IBM Plex Mono'; font-size:18px; cursor:pointer; line-height:1;}
+  .stepper button:hover{border-color:var(--amber); color:var(--amber);}
+  .stepper .count{font-family:'IBM Plex Mono'; font-size:26px; min-width:38px; text-align:center;}
+  .tray{display:flex; flex-wrap:wrap; gap:6px; margin-top:14px; min-height:20px;}
+  .peg{width:16px; height:16px; border-radius:50%;}
+  .peg.live{background:var(--live-bright); box-shadow:0 0 6px rgba(209,59,44,0.5);}
+  .peg.blank{background:var(--blank);}
+  .odds-readout{border-left:1px solid var(--line-bright); padding-left:40px;}
+  @media(max-width:800px){.odds-readout{border-left:none; padding-left:0; border-top:1px solid var(--line-bright); padding-top:28px;}}
+  .odds-bar{height:34px; width:100%; background:var(--blank); position:relative; overflow:hidden; margin:16px 0 8px;}
+  .odds-bar-fill{position:absolute; left:0; top:0; bottom:0; background:var(--live-bright); transition:width .25s ease;}
+  .odds-nums{display:flex; justify-content:space-between; font-family:'IBM Plex Mono'; font-size:13px;}
+  .odds-nums .live-n{color:var(--live-bright);}
+  .odds-nums .blank-n{color:#1a1610;}
+  .verdict-box{margin-top:26px; padding:18px 20px; background:var(--bg); border-left:3px solid var(--amber);}
+  .verdict-box .vt{font-family:'IBM Plex Mono'; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:var(--amber);}
+  .verdict-box p{margin:8px 0 0; font-size:15px; color:var(--paper);}
+
+  .principle-list{display:flex; flex-direction:column; gap:0; border-top:1px solid var(--line);}
+  .principle{display:grid; grid-template-columns:64px 1fr; gap:20px; padding:22px 0; border-bottom:1px solid var(--line);}
+  .principle .pnum{font-family:'IBM Plex Mono'; font-size:13px; color:var(--amber-dim); padding-top:2px;}
+  .principle h4{font-family:'IBM Plex Sans'; font-weight:600; font-size:16px; color:var(--paper); margin:0 0 6px;}
+  .principle p{margin:0; color:var(--paper-dim); font-size:14.5px;}
+
+  .don-panel{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line); border:1px solid var(--line);}
+  @media(max-width:800px){.don-panel{grid-template-columns:1fr;}}
+  .don-col{background:var(--bg-panel); padding:30px 28px;}
+  .don-col h3{font-size:26px; color:var(--paper); margin-bottom:12px;}
+  .don-col ul{margin:0; padding-left:18px; color:var(--paper-dim); font-size:14.5px;}
+  .don-col li{margin-bottom:10px;}
+  .stakes{font-family:'IBM Plex Mono'; font-size:12px; color:var(--amber); letter-spacing:0.08em; text-transform:uppercase; margin-bottom:10px; display:block;}
+
+  .ach-list{border-top:1px solid var(--line);}
+  .ach{display:grid; grid-template-columns:1fr 2fr; gap:20px; padding:18px 0; border-bottom:1px solid var(--line); align-items:baseline;}
+  @media(max-width:640px){.ach{grid-template-columns:1fr;}}
+  .ach .an{font-family:'Bebas Neue'; font-size:20px; color:var(--paper); letter-spacing:0.02em;}
+  .ach .ad{color:var(--paper-dim); font-size:14px;}
+  .ach.hidden .ad{color:var(--muted); font-style:italic;}
+  .ach .tag{display:inline-block; font-family:'IBM Plex Mono'; font-size:9px; letter-spacing:0.08em; text-transform:uppercase; color:var(--amber); border:1px solid var(--amber-dim); padding:2px 6px; margin-left:8px; vertical-align:middle;}
+
+  /* THE WALL */
+  .board{background:repeating-linear-gradient(0deg, rgba(255,255,255,0.015) 0px, rgba(255,255,255,0.015) 1px, transparent 1px, transparent 26px), var(--bg-panel); border:1px solid var(--line-bright); padding:32px; margin-bottom:40px;}
+  .log-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px;}
+  @media(max-width:900px){.log-grid{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:600px){.log-grid{grid-template-columns:1fr;}}
+  .log-card{background:var(--bg); border:1px solid var(--line-bright); padding:20px; position:relative; transform:rotate(var(--rot,0deg));}
+  .log-card::before{content:""; position:absolute; top:-8px; left:50%; transform:translateX(-50%) rotate(-8deg); width:26px; height:10px; background:var(--amber); opacity:0.55; box-shadow:0 2px 4px rgba(0,0,0,0.4);}
+  .log-head{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px; gap:8px;}
+  .log-alias{font-family:'Bebas Neue'; font-size:19px; color:var(--paper); letter-spacing:0.02em;}
+  .log-tag{font-family:'IBM Plex Mono'; font-size:9px; color:var(--muted); letter-spacing:0.06em; white-space:nowrap;}
+  .log-body{font-size:14px; color:var(--paper-dim); word-break:break-word;}
+  .log-foot{margin-top:14px; display:flex; justify-content:space-between; align-items:center; font-family:'IBM Plex Mono'; font-size:10px; color:var(--muted); gap:8px;}
+  .verdict-chip{font-family:'IBM Plex Mono'; font-size:9px; letter-spacing:0.06em; text-transform:uppercase; padding:2px 7px; border:1px solid var(--amber-dim); color:var(--amber); white-space:nowrap;}
+  .verdict-chip.hot{border-color:var(--live-bright); color:var(--live-bright);}
+  .verdict-chip.good{border-color:var(--blank); color:var(--blank);}
+  .board-caption{font-family:'IBM Plex Mono'; font-size:11px; color:var(--muted); margin-top:16px; text-align:center;}
+
+  .comment-panel{background:var(--bg-panel-2); border:1px solid var(--line-bright); padding:28px;}
+  .comment-panel .field-label{font-family:'IBM Plex Mono'; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:var(--amber); display:block; margin-bottom:14px;}
+  .comment-note{font-family:'IBM Plex Mono'; font-size:11px; color:var(--muted); margin-top:14px;}
+
+  footer{padding:40px 0; text-align:center;}
+  footer p{font-family:'IBM Plex Mono'; font-size:12px; color:var(--muted);}
+</style>
+</head>
+<body>
+
+<header class="topnav">
+  <div class="nav-inner">
+    <a href="#top" class="brand"><span class="dot"></span>THE CHAMBER</a>
+    <nav class="tabs">
+      <a href="#manual">Manual</a>
+      <a href="#arsenal">Arsenal</a>
+      <a href="#odds">Odds</a>
+      <a href="#don">Double or Nothing</a>
+      <a href="#file">The File</a>
+      <a href="#wall">The Wall</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero" style="border-bottom:1px solid var(--line); padding-top:96px;">
+    <div class="bulb"></div>
+    <div class="wrap hero-grid">
+      <div>
+        <div class="eyebrow">Field Manual — Unofficial Strategy Guide</div>
+        <h1 class="title">BUCKSHOT<br><span>ROULETTE.</span></h1>
+        <p class="lede">One shotgun. Unmarked shells. Two players who take turns deciding whether to trust the odds. This is the manual for the eight-item, one-bad-decision game — rules, item math, and the probability calls that actually separate a win from a headstone.</p>
+        <div class="cta-row">
+          <a href="#odds" class="btn primary">Run the odds calculator</a>
+          <a href="#arsenal" class="btn">Study the items</a>
+        </div>
+      </div>
+      <div class="shell-stage">
+        <button class="shell-btn" id="shellToggle" aria-label="Flip shell between live and blank">
+          <svg id="shellSvg" width="180" height="220" viewBox="0 0 180 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="shellBody" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#2c2015"/>
+                <stop offset="1" stop-color="#0f0a06"/>
+              </linearGradient>
+            </defs>
+            <rect x="40" y="10" width="100" height="110" rx="6" fill="url(#shellBody)" stroke="#4a3a24" stroke-width="2"/>
+            <rect x="40" y="10" width="100" height="18" rx="4" fill="#5a4526"/>
+            <rect x="34" y="118" width="112" height="70" rx="10" id="shellCap" fill="#b3231a" stroke="#5c1912" stroke-width="2"/>
+            <circle cx="90" cy="153" r="16" fill="#0f0a06" stroke="#5c1912" stroke-width="2"/>
+            <line x1="40" y1="45" x2="140" y2="45" stroke="#000" stroke-opacity="0.35" stroke-width="1"/>
+            <line x1="40" y1="60" x2="140" y2="60" stroke="#000" stroke-opacity="0.35" stroke-width="1"/>
+          </svg>
+        </button>
+        <div class="shell-caption">Click the shell — <b>tap to rack it</b>.
+          <span id="shellVerdict" class="verdict live">CHAMBERED: LIVE ROUND</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="manual">
+    <div class="wrap">
+      <div class="sec-head">
+        <div><div class="sec-num">01 / THE MANUAL</div><h2 class="sec-title">How the table works</h2></div>
+        <p class="sec-sub">The rules are simple on paper — that's what makes the decisions hard. Here's the mechanical skeleton before you touch a single item.</p>
+      </div>
+      <div class="rules-grid">
+        <div class="rule-card"><div class="rk">THE LOAD</div><h3>Live &amp; blank shells</h3><p>Before each round, the dealer racks a random mix of live and blank shells into the shotgun and states how many of each — for example, "3 live, 2 blank." You never know the order, only the ratio, until an item or a fired shot reveals more.</p></div>
+        <div class="rule-card"><div class="rk">THE TURN</div><h3>Fire at yourself or them</h3><p>On your turn you choose a target: yourself or your opponent. Shoot the opponent with a live round and you deal damage. Shoot yourself with a blank and nothing happens — but the turn passes to your opponent either way, unless a blank on yourself grants you another turn.</p></div>
+        <div class="rule-card"><div class="rk">THE CATCH</div><h3>Blanks on yourself repeat your turn</h3><p>Firing a blank into your own head doesn't cost you your turn — you go again. This is the core risk/reward loop: shooting yourself is a bet that the shell is blank, and if you're right, you get a free extra action.</p></div>
+        <div class="rule-card"><div class="rk">THE TABLE</div><h3>Items refresh every round</h3><p>Before most rounds, both sides draw a small, random hand of items from the pool of nine. Items can be used at any point on your turn, before you decide who to shoot — and most can be used more than once if you hold duplicates.</p></div>
+        <div class="rule-card"><div class="rk">THE STAKES</div><h3>Health &amp; rounds</h3><p>Each side has a health pool that resets and grows across rounds. Run out of health and you lose the round; lose enough rounds and the match ends. Damage is normally one point per live shell, doubled if the shooter used a saw first.</p></div>
+        <div class="rule-card"><div class="rk">THE OPPONENT</div><h3>The Dealer plays the same game</h3><p>Your opponent — the Dealer, or another player in multiplayer — follows the same rules and has access to the same items. Nothing is hidden from the mechanics; the only real fog is which shell is actually chambered.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="arsenal">
+    <div class="wrap">
+      <div class="sec-head">
+        <div><div class="sec-num">02 / THE ARSENAL</div><h2 class="sec-title">All nine items</h2></div>
+        <p class="sec-sub">Every item type in the game, what it actually does, when to reach for it, and the mistake most people make with it.</p>
+      </div>
+      <div class="item-grid" id="itemGrid"></div>
+    </div>
+  </section>
+
+  <section id="odds">
+    <div class="wrap">
+      <div class="sec-head">
+        <div><div class="sec-num">03 / THE ODDS</div><h2 class="sec-title">Should you pull the trigger on yourself?</h2></div>
+        <p class="sec-sub">Set what you know is left in the chamber — from the dealer's callout, a magnifying glass, or a burner phone read — and get the raw math behind the decision.</p>
+      </div>
+      <div class="odds-panel">
+        <div class="odds-grid">
+          <div>
+            <div class="stepper-group">
+              <div class="stepper-label"><span class="lbl live">Live rounds remaining</span></div>
+              <div class="stepper"><button id="liveMinus" aria-label="Decrease live rounds">−</button><span class="count mono" id="liveCount">2</span><button id="livePlus" aria-label="Increase live rounds">+</button></div>
+              <div class="tray" id="liveTray"></div>
+            </div>
+            <div class="stepper-group">
+              <div class="stepper-label"><span class="lbl blank">Blank rounds remaining</span></div>
+              <div class="stepper"><button id="blankMinus" aria-label="Decrease blank rounds">−</button><span class="count mono" id="blankCount">3</span><button id="blankPlus" aria-label="Increase blank rounds">+</button></div>
+              <div class="tray" id="blankTray"></div>
+            </div>
+          </div>
+          <div class="odds-readout">
+            <span class="mono" style="font-family:'IBM Plex Mono'; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted);">Next shell probability</span>
+            <div class="odds-bar"><div class="odds-bar-fill" id="oddsFill"></div></div>
+            <div class="odds-nums"><span class="live-n" id="liveOddsNum">40% LIVE</span><span class="blank-n" id="blankOddsNum">60% BLANK</span></div>
+            <div class="verdict-box"><span class="vt">Recommendation</span><p id="verdictText">Blanks favored — shooting yourself is the statistically sound play, and a correct guess earns you another turn.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="principle-list" style="margin-top:56px;">
+        <div class="principle"><div class="pnum mono">01</div><div><h4>Below ~40% live, lean on yourself</h4><p>When blanks clearly outnumber live rounds, shooting yourself is the higher-expected-value play — you likely survive and get a free extra turn instead of passing initiative to the dealer.</p></div></div>
+        <div class="principle"><div class="pnum mono">02</div><div><h4>Above ~60% live, shoot the dealer</h4><p>Once live rounds dominate the remaining shells, firing at yourself is just volunteering for damage. Take the shot at the dealer and bank the likely hit.</p></div></div>
+        <div class="principle"><div class="pnum mono">03</div><div><h4>Near 50/50, spend an item before you decide</h4><p>A magnifying glass or burner phone read is worth far more in a coin-flip chamber than in a lopsided one — that's exactly when a guess is most likely to be wrong.</p></div></div>
+        <div class="principle"><div class="pnum mono">04</div><div><h4>The knife rule: don't gamble into extra damage</h4><p>If the dealer has already used a saw and it's a 1:1 shell situation, players generally recommend shooting yourself over the dealer — a wrong guess against you costs 1 HP, a wrong guess that lets the dealer fire back at you with a saw already primed costs more.</p></div></div>
+        <div class="principle"><div class="pnum mono">05</div><div><h4>Use items every turn — they don't carry real value sitting still</h4><p>Fresh items arrive most rounds, so hoarding rarely pays off, and a full item rack just gives an opponent's adrenaline more to steal. Play information items — magnifying glass, burner phone — first, before you're forced to guess.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="don">
+    <div class="wrap">
+      <div class="sec-head">
+        <div><div class="sec-num">04 / THE HIGH-STAKES ROOM</div><h2 class="sec-title">Double or Nothing mode</h2></div>
+        <p class="sec-sub">A standalone mode where you bet cash instead of just health. Win a set of rounds, and you can cash out or double down and go again — for exponentially higher stakes and exponentially worse odds of walking away clean.</p>
+      </div>
+      <div class="don-panel">
+        <div class="don-col">
+          <span class="stakes">How it plays</span><h3>Press your luck, on the clock</h3>
+          <ul>
+            <li>You play a set of rounds against the Dealer just like the main game, but each win adds to a running payout.</li>
+            <li>After clearing a set, you choose: cash out and bank your winnings, or continue and risk it all on the next set for a bigger multiplier.</li>
+            <li>Winnings scale fast — clearing sets quickly matters, since payout math rewards speed as much as survival.</li>
+            <li>Items and leftover shells can carry over between sets, so a bad item deficit at the end of one set can haunt the start of the next.</li>
+          </ul>
+        </div>
+        <div class="don-col">
+          <span class="stakes">Strategy notes</span><h3>Playing the long game</h3>
+          <ul>
+            <li>Don't burn every game-changing item just to close out a set early if you're already guaranteed the win — banking items into the next set can save you later.</li>
+            <li>If you're in a strong item position, let the dealer waste its magnifying glasses and beers rather than rushing to end the round.</li>
+            <li>Cashing out early is always the safe play — it's a guaranteed, if smaller, payout instead of a bet on your next set surviving intact.</li>
+            <li>Because both sides' items and shell knowledge can roll over, the odds math from the calculator above still applies every single turn — the stakes just get heavier.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="file">
+    <div class="wrap">
+      <div class="sec-head">
+        <div><div class="sec-num">05 / THE FILE</div><h2 class="sec-title">Achievements worth chasing</h2></div>
+        <p class="sec-sub">A selection of the game's achievements with confirmed unlock conditions. Several others in the list remain deliberately cryptic — that's the game being the game.</p>
+      </div>
+      <div class="ach-list" id="achList"></div>
+    </div>
+  </section>
+
+  <!-- THE WALL -->
+  <section id="wall">
+    <div class="wrap">
+      <div class="sec-head">
+        <div><div class="sec-num">06 / THE WALL</div><h2 class="sec-title">Player logs</h2></div>
+        <p class="sec-sub">Notes left by other players — close calls, dumb deaths, and the odd piece of strategy nobody asked for. No account needed to add your own.</p>
+      </div>
+
+      <div class="board">
+        <div class="log-grid" id="logGrid"></div>
+        <div class="board-caption">A few highlights from the case file. Your own log appears below, once posted.</div>
+      </div>
+
+      <div class="comment-panel">
+        <span class="field-label">Leave your own log — no login required</span>
+        <!-- Cusdis: a free, no-login comment widget for static sites. -->
+        <!-- Setup: sign up at https://cusdis.com, create a project for this site's domain, -->
+        <!-- then replace YOUR_CUSDIS_APP_ID below with the appId Cusdis gives you. -->
+        <div id="cusdis_thread"
+          data-host="https://cusdis.com"
+          data-app-id="1842ef39-dad8-4139-a9a1-e740bab5a26f"
+          data-page-id="the-wall"
+          data-page-url="https://ktgk62cjrv-star.github.io/website/#wall"
+          data-page-title="The Wall — Buckshot Roulette Field Manual"
+          data-theme="dark">
+        </div>
+        <script async defer src="https://cusdis.com/js/cusdis.es.js"></script>
+        <p class="comment-note">Comments are public once posted and reviewed by the site owner. Powered by Cusdis.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>THE CHAMBER — an unofficial fan strategy guide for Buckshot Roulette by Mike Klubnika. Not affiliated with the developer.</p>
+  </footer>
+
+</main>
+
+<script>
+  const items = [
+    {name:"Magnifying Glass", effect:"Reveals whether the currently chambered shell is live or blank.", timing:"Open with it in rounds with several shells loaded — information is cheapest early, before you've committed to skipping or sawing.", mistake:"Wasting it on a two-shell chamber where earlier reveals already told you almost everything."},
+    {name:"Handcuffs", effect:"Locks the opponent out of their next turn, and they can't use items while cuffed.", timing:"Use it right before a shell you know or strongly suspect is live, to guarantee two consecutive shots on the dealer.", mistake:"Cuffing without any information edge — it only delays the dealer, it doesn't decide the exchange for you."},
+    {name:"Beer (Cracked Can)", effect:"Racks the chamber, ejecting the current shell without firing it.", timing:"Only when the odds are clearly against you and no other item can save the situation.", mistake:"Using it defensively every turn — you burn a turn's worth of tempo and an item slot for very little upside."},
+    {name:"Cigarette Pack", effect:"Restores one point of health, up to your maximum.", timing:"Immediately when you're below full health, before the dealer can steal it with adrenaline.", mistake:"Hoarding it at full health — health you didn't bank while you could is health an opponent can deny you."},
+    {name:"Handsaw", effect:"Doubles the damage of the next shot fired, if that shell turns out to be live.", timing:"Right after a magnifying glass confirms a live round — pair the two for a guaranteed double hit.", mistake:"Sawing blind. If the shell turns out blank, the item is wasted for nothing."},
+    {name:"Adrenaline", effect:"Steal an item from the dealer's side of the table and use it immediately.", timing:"Early, when the dealer is holding an item you need — or before they get the chance to use it on you.", mistake:"Sitting on it. It can only steal what's currently on the table, and the dealer's hand changes every round."},
+    {name:"Burner Phone", effect:"Reveals what a specific upcoming shell will be — not necessarily the very next one.", timing:"Use it early in a round with several shells left, so the information has more turns to actually pay off.", mistake:"Misreading which position it's telling you about in a short chamber — it counts from the current shell, not from the start of the load."},
+    {name:"Inverter", effect:"Flips the type of the currently chambered shell — live becomes blank, blank becomes live.", timing:"After a magnifying glass confirms the next shell is unfavorable, flip it in your favor before firing.", mistake:"Using it blind. Inverting an unidentified shell is just a second coin flip, not a fix."},
+    {name:"Expired Medicine", effect:"A gamble: fifty-fifty chance to heal two health or lose one.", timing:"Only when you're already low and both outcomes are survivable — or you're out of safer options.", mistake:"Using it at high health for 'extra' HP — the downside costs more than a marginal upside is worth when you're already safe."}
+  ];
+  const itemIcon = (i) => `<svg class="item-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="20" cy="20" r="18" fill="none" stroke="#3d362c" stroke-width="1.5"/><text x="20" y="26" text-anchor="middle" font-family="IBM Plex Mono" font-size="14" fill="#e0952f">${String(i+1).padStart(2,'0')}</text></svg>`;
+  const itemGrid = document.getElementById('itemGrid');
+  items.forEach((it, i) => {
+    const card = document.createElement('div');
+    card.className = 'item-card';
+    card.innerHTML = `<div class="item-top"><span class="item-name">${it.name}</span>${itemIcon(i)}</div>
+      <div class="item-row"><div class="item-label">Effect</div><div class="item-text">${it.effect}</div></div>
+      <div class="item-row"><div class="item-label">Best timing</div><div class="item-text">${it.timing}</div></div>
+      <div class="item-row"><div class="item-label">Common mistake</div><div class="item-text mistake">${it.mistake}</div></div>`;
+    itemGrid.appendChild(card);
+  });
+
+  const achievements = [
+    {name:"Beat the Game", desc:"Win a full match against the Dealer.", hidden:false},
+    {name:"Coin Flip", desc:"Successfully shoot yourself with a blank, facing exactly 50/50 odds.", hidden:false},
+    {name:"Chasing Losses", desc:"Consume the Double or Nothing pills to enter the mode.", hidden:false},
+    {name:"Nope!", desc:"Cash out immediately in Double or Nothing.", hidden:false},
+    {name:"140K", desc:"Double your earnings in Double or Nothing and win the set.", hidden:false},
+    {name:"Overdose", desc:"Start Double or Nothing mode ten separate times.", hidden:false},
+    {name:"1000K", desc:"Cash out over 1,000,000 in Double or Nothing in a single run.", hidden:false},
+    {name:"Know When to Quit", desc:"Lose more than 1,000,000 in Double or Nothing.", hidden:false},
+    {name:"Full House", desc:"Play all nine item types in a single turn during Double or Nothing — items stolen via Adrenaline from the dealer's side count toward the total.", hidden:false},
+    {name:"Bronze Gates / High Rollers / Name Taken / Soak It In / Why? / Going Out With Style!", desc:"Unlock condition left undocumented here — intentionally cryptic, part of the game's own mystery.", hidden:true}
+  ];
+  const achList = document.getElementById('achList');
+  achievements.forEach(a => {
+    const row = document.createElement('div');
+    row.className = 'ach' + (a.hidden ? ' hidden' : '');
+    row.innerHTML = `<div class="an">${a.name}${a.hidden ? '<span class="tag">Undocumented</span>' : ''}</div><div class="ad">${a.desc}</div>`;
+    achList.appendChild(row);
+  });
+
+  const shellCap = document.getElementById('shellCap');
+  const shellVerdict = document.getElementById('shellVerdict');
+  let isLive = true;
+  document.getElementById('shellToggle').addEventListener('click', () => {
+    isLive = !isLive;
+    if(isLive){
+      shellCap.setAttribute('fill', '#b3231a'); shellCap.setAttribute('stroke', '#5c1912');
+      shellVerdict.textContent = 'CHAMBERED: LIVE ROUND'; shellVerdict.className = 'verdict live';
+    } else {
+      shellCap.setAttribute('fill', '#c9b97c'); shellCap.setAttribute('stroke', '#6b6142');
+      shellVerdict.textContent = 'CHAMBERED: BLANK ROUND'; shellVerdict.className = 'verdict blank';
+    }
+  });
+
+  let liveN = 2, blankN = 3;
+  const liveCountEl = document.getElementById('liveCount');
+  const blankCountEl = document.getElementById('blankCount');
+  const liveTray = document.getElementById('liveTray');
+  const blankTray = document.getElementById('blankTray');
+  const oddsFill = document.getElementById('oddsFill');
+  const liveOddsNum = document.getElementById('liveOddsNum');
+  const blankOddsNum = document.getElementById('blankOddsNum');
+  const verdictText = document.getElementById('verdictText');
+  function renderTray(el, n, cls){ el.innerHTML = ''; for(let i=0;i<n;i++){ const p = document.createElement('div'); p.className = 'peg ' + cls; el.appendChild(p);} }
+  function updateOdds(){
+    liveCountEl.textContent = liveN; blankCountEl.textContent = blankN;
+    renderTray(liveTray, liveN, 'live'); renderTray(blankTray, blankN, 'blank');
+    const total = liveN + blankN;
+    if(total === 0){
+      oddsFill.style.width = '0%'; liveOddsNum.textContent = '— LIVE'; blankOddsNum.textContent = '— BLANK';
+      verdictText.textContent = 'No shells loaded yet — set at least one live or blank round to see the odds.'; return;
+    }
+    const pLive = Math.round((liveN/total)*100); const pBlank = 100 - pLive;
+    oddsFill.style.width = pLive + '%'; liveOddsNum.textContent = pLive + '% LIVE'; blankOddsNum.textContent = pBlank + '% BLANK';
+    let msg;
+    if(pBlank >= 60){ msg = `Blanks favored at ${pBlank}% — shooting yourself is the statistically sound play, and a correct guess earns you another turn.`; }
+    else if(pLive >= 60){ msg = `Live rounds favored at ${pLive}% — fire on the dealer. Shooting yourself here is a bad bet against the odds.`; }
+    else { msg = `Close to a coin flip (${pLive}% live / ${pBlank}% blank) — this is exactly when a magnifying glass or burner phone read is worth the most. Spend an information item before you commit.`; }
+    verdictText.textContent = msg;
+  }
+  document.getElementById('livePlus').addEventListener('click', () => { if(liveN<10){liveN++; updateOdds();} });
+  document.getElementById('liveMinus').addEventListener('click', () => { if(liveN>0){liveN--; updateOdds();} });
+  document.getElementById('blankPlus').addEventListener('click', () => { if(blankN<10){blankN++; updateOdds();} });
+  document.getElementById('blankMinus').addEventListener('click', () => { if(blankN>0){blankN--; updateOdds();} });
+  updateOdds();
+
+  const seedLogs = [
+    {alias:"Witness #114", mode:"Classic Mode", outcome:"RIP", text:"Sawed a shell the dealer had just inverted without checking first. Should've grabbed the magnifying glass. Dead in one."},
+    {alias:"Witness #099", mode:"Classic Mode", outcome:"SURVIVED", text:"1 live, 1 blank, dealer had a saw ready. Shot myself on the knife rule from this guide. Blank. Won the round next turn."},
+    {alias:"Witness #087", mode:"Double or Nothing", outcome:"CASHED OUT", text:"Cashed out at 140K in Double or Nothing instead of pushing. Felt like a coward. Watched the next player lose 900K. No regrets."},
+    {alias:"Witness #071", mode:"Double or Nothing", outcome:"ACHIEVEMENT", text:"Finally got Full House. Two adrenalines, stole the dealer's saw and beer mid-turn. Genuinely felt like a heist."},
+    {alias:"Witness #053", mode:"Classic Mode", outcome:"RIP", text:"Reminder that beer is not a panic button. Racked three shells in a row out of nerves and handed the dealer the whole round."},
+    {alias:"Witness #040", mode:"Classic Mode", outcome:"RIP", text:"Burner phone told me shell 3 was live. Miscounted from the wrong chamber, sawed shell 2 instead. Still not over it."}
+  ];
+  const rotations = [-1.2, 0.8, -0.4, 1.1, -0.9, 0.5];
+  function chipClass(outcome){
+    if(outcome === 'RIP') return 'verdict-chip hot';
+    if(outcome === 'SURVIVED' || outcome === 'CASHED OUT' || outcome === 'ACHIEVEMENT') return 'verdict-chip good';
+    return 'verdict-chip';
+  }
+  const logGrid = document.getElementById('logGrid');
+  seedLogs.forEach((e, i) => {
+    const card = document.createElement('div');
+    card.className = 'log-card';
+    card.style.setProperty('--rot', rotations[i % rotations.length] + 'deg');
+    card.innerHTML = `<div class="log-head"><span class="log-alias">${e.alias}</span></div>
+      <div class="log-body">${e.text}</div>
+      <div class="log-foot"><span>${e.mode}</span><span class="${chipClass(e.outcome)}">${e.outcome}</span></div>`;
+    logGrid.appendChild(card);
+  });
+</script>
+
+</body>
+</html>
